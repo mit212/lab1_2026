@@ -1,7 +1,7 @@
 # Lab 1: DC Motor Basics
 
 2.12/2.120 Intro to Robotics  
-Spring 2025[^1]
+Spring 2026[^1]
 
 ## Table of Contents
 - [Lab 1: DC Motor Basics](#lab-1-dc-motor-basics)
@@ -181,7 +181,7 @@ We will then wire the motor driver to the microcontroller so that we can use cod
     Note: We have suggested jumper cable colors for convention, but remember that the **colors alone don't mean anything**! If you see a black jumper cable in the future, don't automatically assume that it must be ground.
 
     <details>
-    <summary><i> Nothing is happening?</i>
+    <summary><i> Nothing is happening!</i>
     </summary>
 
     Make sure you wired up the motor driver and **not the encoder**! The motor driver is the **PCB** you connected to the power supply output, while the encoder is the black cylinder attached to the end of the motor.
@@ -239,9 +239,9 @@ To see the encoder in action, we will upload the provided encoder test code on t
 2. Upload and run `encoder_basic_test.cpp`. 
 3. Open the Serial Monitor by clicking the plug icon at the bottom of the screen.
   ![](./.images/serial_monitor.png) 
-3. By looking at the counts printed in the Serial Monitor, estimate how many encoder counts it takes per revolution. Observe that counter-clockwise motion increases the encoder count, while clockwise motion decreases it!
-4. Upload and run `encoder_test.cpp`. 
-5. Rotate the wheel. Confirm that the position and velocity readings make sense!
+4. Rotate the wheel by hand. By looking at the counts printed in the Serial Monitor, estimate how many encoder counts it takes per revolution. Observe that counter-clockwise motion increases the encoder count, while clockwise motion decreases it!
+5. Upload and run `encoder_test.cpp`. 
+6. Rotate the wheel. Confirm that the position and velocity readings make sense!
 
 | :white_check_mark: CHECKOFF 2 :white_check_mark:   |
 |:---------------------------------------------------|
@@ -270,6 +270,11 @@ Please ask a TA or LA for a joystick. Refer to the schematic below to wire it to
 <img src="./.images/schematic3.png" width="900"/>
 </p>
 
+Your setup should look something like this:
+<p align="center">
+<img src="./.images/setup_joystick.jpg" alt="setup" width="600"/>
+</p>
+
 #### X.1.3 Printing Joystick Input
 
 We will now write some code to collect and print input from the joystick. 
@@ -285,8 +290,8 @@ void setup(){
 }
 
 void loop(){
-	int UD_pot = analogRead(2);
-    	int LR_pot = analogRead(1);
+	int UD_pot = analogRead(1);
+    	int LR_pot = analogRead(2);
 	Serial.println("LR: " + String(LR_pot) + ", UD: " + String(UD_pot));
 	delay(100);
 }
@@ -294,9 +299,21 @@ void loop(){
 
 4. Upload and run `motor_joystick_control.cpp`. You should see the positions of the two potentiometers of the joystick print on the Serial Monitor!
 
+<details>
+    <summary><i> Code doesn't run? </i></summary>
+    Make sure that `motor_joystick_control.cpp` is the only file in your `robot` folder!
+</details>
+
 #### X.1.4 Put It All Together!
 
 Combine `motor_joystick_control.cpp` and `motor_position_control.cpp` so that the `setpoint` in `motor_position_control.cpp` is dictated by either `x` or `y` in `motor_joystick_control.cpp`. Remember to include a scaling factor to convert between the 12 bit analogRead output (0-4095) and the desired setpoint in radians.
+
+<details>
+    <summary><i> Motor not behaving? </i></summary>
+    Try playing with the gains at the top of the file. You may need to reduce the proportional gain, Kp, to make the controller less "stiff."
+    You should also try switching between position and velocity control modes. You can do this by changing one of the inputs to the function `calculateParallel`. How does this change affect the joystick-to-motor relationship?
+</details>
+
 
 | :white_check_mark: OPTIONAL CHECKOFF 3 :white_check_mark:   |
 |:---------------------------------------------------|
@@ -304,4 +321,5 @@ Combine `motor_joystick_control.cpp` and `motor_position_control.cpp` so that th
 
 
 [^1]: Version 1 - 2024: Joseph Ntaimo, Josh Sohn, Jinger Chong  
-  Version 2 - 2025: Roberto Bolli, Kaleb Blake
+  Version 2 - 2025: Roberto Bolli, Kaleb Blake  
+  Version 3 - 2026: Stephan Stansfield
