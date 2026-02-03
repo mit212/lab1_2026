@@ -6,7 +6,7 @@
 #include "MotorDriver.h"
 
 //PID Parameters
-double kp = 5;
+double kp = 0.5;
 double ki = 0;
 double kd = 0;
 double tau = 0.1; //seconds
